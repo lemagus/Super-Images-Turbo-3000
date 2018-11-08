@@ -1,0 +1,42 @@
+table {
+	
+	border-collapse: collapse;
+	margin: 1rem;
+	width: auto;
+	
+	display: flex;
+	
+	tr {
+		
+		background-color: #EDEDED;
+		transition: .4s;
+		
+		&:nth-child(even) {
+			background-color: #F5F5F5;
+		}
+		
+		td {
+			padding: 0.4em 1em;
+			
+			a {
+				color: brown;
+				text-decoration: none;
+				
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+			
+		}
+		
+		&:hover {
+			background-color: brown;
+			td {
+				color: white;
+				a {
+					color: white;
+				}
+			}	
+		}
+	}
+}
