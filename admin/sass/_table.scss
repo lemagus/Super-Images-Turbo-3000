@@ -15,8 +15,26 @@ table {
 			background-color: #F5F5F5;
 		}
 		
+		th {
+			
+			padding: 1em;
+			
+		}
+		
 		td {
+			
 			padding: 0.4em 1em;
+			max-width: 100px;
+		
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space:  nowrap;
+			
+			vertical-align: top;
+			
+			&:hover {
+				white-space: normal;
+			}
 			
 			a {
 				color: brown;
