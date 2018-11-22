@@ -64,4 +64,43 @@ form {
 		
 		margin-bottom: 1.6em;
 	}
+	
+	.keyword {
+		
+		display: flex;
+		padding: 1em;
+		
+		input {
+			display: inline-block;
+			margin: 0;
+		}
+	}
+	
+	.delete {
+		font-size: 2em;
+		text-decoration: none;
+		display: inline-block;
+		margin-left: 1em;
+	}
+	
+	.new {
+		
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		background: #CCC;
+		padding: 1em;
+		margin-top: 2em;
+		
+		select, input {
+			width: 100%;
+			padding: 0.8em;
+			margin: auto;
+			margin: 0.3em;
+		}
+		
+		select {
+			height: 2em;
+		}
+	}
 }

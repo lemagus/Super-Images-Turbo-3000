@@ -4,4 +4,7 @@
 	define('USER', 'root');
 	define('PASSWD', 'root');
 	
+	
 	$dpo = new PDO('mysql:host=localhost;dbname=' . DATABASE, USER, PASSWD);
+	
+		

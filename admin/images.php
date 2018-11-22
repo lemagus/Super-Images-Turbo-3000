@@ -7,8 +7,9 @@
 		FROM images
 		JOIN images2keywords ON images2keywords.image_id = images.id
 		JOIN keywords ON images2keywords.keyword_id = keywords.id
-		GROUP BY images.name
+		GROUP BY images.id
 	");
+	
 	$images = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 ?><!DOCTYPE>
