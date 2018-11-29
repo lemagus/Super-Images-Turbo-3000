@@ -2,6 +2,11 @@
 	
 	include('database.php');
 	
+	if(!empty($_GET['del'])) {
+		$dpo->query("DELETE FROM images2keywords WHERE keyword_id = " . $_GET['del']);
+		$dpo->query("DELETE FROM keywords WHERE id = " . $_GET['del']);
+	}
+	
 	if(!empty($_POST)){
 		
 		foreach($_POST['id'] as $key => $id){
@@ -19,7 +24,7 @@
 		
 	}
 	
-	$statement = $dpo->query("SELECT id, name, category FROM keywords");
+	$statement = $dpo->query("SELECT id, name, category FROM keywords ORDER BY name");
 	$keywords = $statement->fetchAll();
 	
 	$statement = $dpo->query("
@@ -65,10 +70,26 @@
 						<?php endforeach; ?>
 						</select>
 					</td>
-					<td><a href="/admin/edit_keyword.php?id=<?= $keyword['id'] ?>" >Edit</a></td>
+					<td>
+						<a href="/admin/edit_keyword.php?id=<?= $keyword['id'] ?>" >Edit</a>
+						-
+						<a class="removeme" href="keywords.php?id=<?= $keyword['id'] ?>&del=<?= $keyword['id'] ?>" >Delete</a>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 			</table>
 		</form>
+		
+		<script type="text/javascript">
+			var deletes = document.querySelectorAll("a.removeme");
+			deletes.forEach(function(btn){
+				btn.addEventListener('click', function(evt){
+					if(!confirm("Es-tu certain.e ?")){
+						evt.preventDefault();
+					}
+				});
+			});
+		</script>
+		
 	</body>
 </html>

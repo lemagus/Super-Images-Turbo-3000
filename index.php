@@ -1,97 +1,96 @@
-<?php 
+<?php
 	
+	include('admin/database.php');
 	
-	define('DATABASE', 'super_images_turbo_3000');
-	define('USER', 'root');
-	define('PASSWD', 'root');
-	
-	$dpo = new PDO('mysql:host=localhost;dbname=' . DATABASE, USER, PASSWD);
+	if( !empty($_POST) ) {
 		
-	$rows = file('db.csv');
-	
-	foreach($rows as $row){
-		
-		$cols 		= explode(";", $row);
-		$keywords 	= explode(",", $cols[1]); 
-		
-		$name		= trim($cols[0]);
-		
-		$stmt = $dpo->prepare("SELECT id FROM images WHERE name = :name");
-		$stmt->execute(['name' => trim($name)]); 
-		$id = $stmt->fetchColumn();
-		
-		if(!$id) {
-				
-			$dpo	->prepare("INSERT INTO images (name) VALUES (:name)")
-					->execute(['name' => trim($name)]);
-					
-			$image_id = $dpo->lastInsertId();
-		
-		} else {
-			$image_id = $id;
-		}
-		
-		foreach($keywords as $keyword){
-			
-			if(empty(trim($keyword))) continue;
-			
-			$stmt = $dpo->prepare("SELECT id FROM keywords WHERE name = :name");
-			$stmt->execute(['name' => trim($keyword)]); 
-			$id = $stmt->fetchColumn();
-			
-			var_dump($id);
-			
-			if(!$id) {
-			
-				$dpo	->prepare("INSERT INTO keywords (name) VALUES (:name)")
-						->execute(['name' => trim($keyword)]);
-						
-				$keyword_id = $dpo->lastInsertId();
-			
-			} else {
-				$keyword_id = $id;
+		$filters = [];
+		foreach($_POST['filters'] as $filter){
+			if(!empty(trim($filter[0]))){
+				$filters[] = $filter[0];
 			}
-			
-			
-			$stmt = $dpo->prepare("SELECT id FROM images2keywords 
-									WHERE image_id = :image_id
-										AND keyword_id = :keyword_id ");
-										
-			$stmt->execute(['image_id' => $image_id, 'keyword_id' => $keyword_id]); 
-			$id = $stmt->fetchColumn();
-			
-			if(!$id) {
-			
-				$dpo	->prepare("INSERT INTO images2keywords (image_id, keyword_id) 
-									VALUES (:image_id, :keyword_id)")
-						->execute([
-							'image_id' => $image_id, 
-							'keyword_id' => $keyword_id]);
-							
-				echo "Insert keyword : " . $keyword . "\n<br>";	
-			
-			} else {
-				
-				$dpo->query("UPDATE images2keywords 
-					SET total = total+1 WHERE id = " . $id );
-					
-				echo "Updated keyword " . $keyword . "\n<br>";
-			}		
 		}
 		
+		$where = '';
+		foreach($filters as $k => $value) {
+			$where .= "images2keywords.keyword_id = " . $value . " OR ";
+		}
 		
-		echo "Insert image : " . $name . "\n<br>";
+		$where = trim(substr($where, 0, -3));
+		$counter = $k+1;
+				
+		$sql = "
+			SELECT *
+			FROM images
+			JOIN images2keywords ON images2keywords.image_id = images.id
+			WHERE ( " . $where . ") 
+			GROUP BY images.id
+			HAVING COUNT(images.id) >= ". $counter .";
+		";
 		
+		$statement = $dpo->query($sql);
+		
+	} else {
+	
+		$statement = $dpo->query("
+			SELECT * FROM images
+		");
+	
 	}
 	
+	$images = $statement->fetchAll(PDO::FETCH_ASSOC);
 	
+	$statement = $dpo->query("
+		SELECT 
+			*, GROUP_CONCAT( CONCAT(keywords.id,'*|*',keywords.name) SEPARATOR ';' ) AS keywords 
+		FROM keywords GROUP BY category
+	");
 	
+	$keywords = $statement->fetchAll(PDO::FETCH_ASSOC);
 	
+?><!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width" >
+        
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet" />
+        
+    </head>
+    <body>
 	
-	
-	
-	
-	
-	
-	
-	
+		<h1> Super images turbo 3000  </h1>
+		
+		<form method="post" action="">
+			<fieldset>
+				<legend>Categories</legend>
+				
+				<?php foreach($keywords as $keyword): ?>
+				<?php $list = explode(";", $keyword["keywords"]); ?>
+				<label>
+					<?php echo $keyword['category'] ?>
+					<select name="filters[<?php echo $keyword['category'] ?>][]" >
+						<option value=""> --- </option>
+						<?php foreach($list as $option): ?>
+						<?php list($value, $label) = explode('*|*', $option); ?>
+						<option value="<?php echo $value ?>" ><?php echo $label ?></option>
+						<?php endforeach; ?>
+					</select>
+				</label>
+				<?php endforeach; ?>
+				
+			</fieldset>
+			<button> Filter </button>
+		</form>
+		
+		<div class="gavin">
+						
+			<?php foreach($images as $image): ?><img src="admin/images/<?php echo $image['name'] ?>.jpg" /><?php endforeach; ?>
+			
+		</div>
+		    
+    </body>
+</html>

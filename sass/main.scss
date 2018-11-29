@@ -1,0 +1,81 @@
+body, html, *, *:before, *:after{
+	margin: 0;
+	padding: 0;
+	border: none;
+	box-sizing: border-box;
+	
+	font-family: Roboto, Arial, sans-serif;
+}
+
+h1 {
+	margin: 1em;
+	text-transform: uppercase;
+	display: 100%;
+	text-align: center;
+}
+
+form {
+	
+	margin-bottom: 2em;
+	
+	fieldset{
+	
+	padding: 1em;
+	display: block;
+	width: 100%;
+	padding: 1em;
+		
+		legend {
+			font-size: 1.6em;
+			text-transform: uppercase;
+		}
+		
+		label {
+			margin: 0.3em 0.5em;
+			font-size: 20px;
+			width: 20%;
+			display: inline-block;
+			
+			select {
+				display: block;
+				width: 100%;
+				height: 1.6em;
+				margin-top: 0.6em;
+				font-size: inherit;
+			}
+		}
+	
+	}
+	
+	button {
+		display: block;
+		padding: 1em;
+		margin: 1em;
+		color: white;
+		background: #C00;
+		text-transform: uppercase;
+		font-size: 1em;
+		border-radius: 10%;
+		cursor: pointer;
+		transition: .4s;
+		
+		&:hover {
+			color: #C00;
+			background: white;
+		}
+	}
+}
+
+.gavin {
+	
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: flex-start;
+	height: 300vh;
+		
+	img {
+		width: 33%;
+		height: auto;
+	}
+}
