@@ -14,54 +14,93 @@ h1 {
 	text-align: center;
 }
 
-form {
-	
-	margin-bottom: 2em;
-	
-	fieldset{
-	
-	padding: 1em;
-	display: block;
-	width: 100%;
-	padding: 1em;
+section.filters {
+
+	h2 {
+		font-size: 1.6em;
+		text-transform: uppercase;
+		margin-left: 1em;
+		margin-bottom: 1em;
 		
-		legend {
-			font-size: 1.6em;
-			text-transform: uppercase;
-		}
-		
-		label {
-			margin: 0.3em 0.5em;
-			font-size: 20px;
-			width: 20%;
-			display: inline-block;
-			
-			select {
-				display: block;
-				width: 100%;
-				height: 1.6em;
-				margin-top: 0.6em;
-				font-size: inherit;
-			}
-		}
-	
+		cursor: pointer;
 	}
 	
-	button {
-		display: block;
-		padding: 1em;
-		margin: 1em;
-		color: white;
-		background: #C00;
-		text-transform: uppercase;
-		font-size: 1em;
-		border-radius: 10%;
+	.toggler {
 		cursor: pointer;
-		transition: .4s;
+	}
+	
+	.toggled {
+		display: none;
+	}
+
+	form {
 		
-		&:hover {
-			color: #C00;
-			background: white;
+		margin-bottom: 2em;
+		
+		fieldset{
+		
+		padding: 1em;
+		display: block;
+		width: 100%;
+		padding: 1em;
+			
+			label {
+				margin: 0.3em 0.5em;
+				font-size: 20px;
+				width: 20%;
+				display: inline-block;
+				
+				select {
+					display: block;
+					width: 100%;
+					height: 1.6em;
+					margin-top: 0.6em;
+					font-size: inherit;
+				}
+			}
+		
+		}
+		
+		button {
+			display: block;
+			padding: 1em;
+			margin: 1em;
+			color: white;
+			background: #C00;
+			text-transform: uppercase;
+			font-size: 1em;
+			border-radius: 10%;
+			cursor: pointer;
+			transition: .4s;
+			
+			&:hover {
+				color: #C00;
+				background: white;
+			}
+		}
+	}
+	
+}
+
+ul.breadcrumb {
+	
+	$list: #CC0000, #CC00CC, #00CCCC, #0000CC, #00CC00, #CCCC00;
+	
+	margin: 1em;
+	
+	li {
+		display: inline-block;
+		margin: 0;
+		text-transform: uppercase;
+		color: nth($list, random( length($list) )); 
+		
+		&:nth-child(odd) {
+			color: nth($list, random( length($list) )); 
+		}
+		
+		& + li:before {
+			content: ">";
+			margin: 0 1em;
 		}
 	}
 }

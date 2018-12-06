@@ -1,1 +1,126 @@
-body,html,*,*:before,*:after{margin:0;padding:0;border:none;box-sizing:border-box;font-family:Roboto, Arial, sans-serif}h1{margin:1em;text-transform:uppercase;display:100%;text-align:center}form{margin-bottom:2em}form fieldset{padding:1em;display:block;width:100%;padding:1em}form fieldset legend{font-size:1.6em;text-transform:uppercase}form fieldset label{margin:0.3em 0.5em;font-size:20px;width:20%;display:inline-block}form fieldset label select{display:block;width:100%;height:1.6em;margin-top:0.6em;font-size:inherit}form button{display:block;padding:1em;margin:1em;color:white;background:#C00;text-transform:uppercase;font-size:1em;border-radius:10%;cursor:pointer;transition:.4s}form button:hover{color:#C00;background:white}.gavin{display:flex;flex-wrap:wrap;flex-direction:column;justify-content:flex-start;height:300vh}.gavin img{width:33%;height:auto}
+/* line 1, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+body, html, *, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+/* line 10, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+h1 {
+  margin: 1em;
+  text-transform: uppercase;
+  display: 100%;
+  text-align: center;
+}
+
+/* line 19, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+section.filters h2 {
+  font-size: 1.6em;
+  text-transform: uppercase;
+  margin-left: 1em;
+  margin-bottom: 1em;
+  cursor: pointer;
+}
+
+/* line 28, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+section.filters .toggler {
+  cursor: pointer;
+}
+
+/* line 32, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+section.filters .toggled {
+  display: none;
+}
+
+/* line 36, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+section.filters form {
+  margin-bottom: 2em;
+}
+
+/* line 40, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+section.filters form fieldset {
+  padding: 1em;
+  display: block;
+  width: 100%;
+  padding: 1em;
+}
+
+/* line 47, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+section.filters form fieldset label {
+  margin: 0.3em 0.5em;
+  font-size: 20px;
+  width: 20%;
+  display: inline-block;
+}
+
+/* line 53, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+section.filters form fieldset label select {
+  display: block;
+  width: 100%;
+  height: 1.6em;
+  margin-top: 0.6em;
+  font-size: inherit;
+}
+
+/* line 64, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+section.filters form button {
+  display: block;
+  padding: 1em;
+  margin: 1em;
+  color: white;
+  background: #C00;
+  text-transform: uppercase;
+  font-size: 1em;
+  border-radius: 10%;
+  cursor: pointer;
+  transition: .4s;
+}
+
+/* line 76, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+section.filters form button:hover {
+  color: #C00;
+  background: white;
+}
+
+/* line 85, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+ul.breadcrumb {
+  margin: 1em;
+}
+
+/* line 91, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+ul.breadcrumb li {
+  display: inline-block;
+  margin: 0;
+  text-transform: uppercase;
+  color: #CCCC00;
+}
+
+/* line 97, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+ul.breadcrumb li:nth-child(odd) {
+  color: #CC0000;
+}
+
+/* line 101, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+ul.breadcrumb li + li:before {
+  content: ">";
+  margin: 0 1em;
+}
+
+/* line 108, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+.gavin {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 300vh;
+}
+
+/* line 116, /Users/goyza/Desktop/Mons/2019/super_images_turbo_3000/sass/main.scss */
+.gavin img {
+  width: 33%;
+  height: auto;
+}
+
+/*# sourceMappingURL=../css/main.map */

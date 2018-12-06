@@ -21,6 +21,7 @@
 	<body>
 		<h1>Images</h1>
 		
+		<a href="insert_image.php" >Insert</a>
 		
 		<form class="listing" method="post" action="" >			
 			<table>

@@ -11,24 +11,37 @@
 			}
 		}
 		
-		$where = '';
-		foreach($filters as $k => $value) {
-			$where .= "images2keywords.keyword_id = " . $value . " OR ";
+		if(!empty($filters)){
+		
+			$sql = "SELECT name FROM keywords WHERE id IN(" . implode(',', $filters) . ")";
+			$statement = $dpo->query($sql);
+			$names = $statement->fetchAll(PDO::FETCH_COLUMN);
+			
+			$where = '';
+			foreach($filters as $k => $value) {
+				$where .= "images2keywords.keyword_id = " . $value . " OR ";
+			}
+			
+			$where = trim(substr($where, 0, -3));
+			$counter = $k+1;
+					
+			$sql = "
+				SELECT *
+				FROM images
+				JOIN images2keywords ON images2keywords.image_id = images.id
+				WHERE ( " . $where . ") 
+				GROUP BY images.id 
+				HAVING COUNT(images.id) >= ". $counter .";
+			";
+			
+			$statement = $dpo->query($sql);
+		
+		} else {
+			
+			$statement = $dpo->query("
+				SELECT * FROM images
+			");
 		}
-		
-		$where = trim(substr($where, 0, -3));
-		$counter = $k+1;
-				
-		$sql = "
-			SELECT *
-			FROM images
-			JOIN images2keywords ON images2keywords.image_id = images.id
-			WHERE ( " . $where . ") 
-			GROUP BY images.id
-			HAVING COUNT(images.id) >= ". $counter .";
-		";
-		
-		$statement = $dpo->query($sql);
 		
 	} else {
 	
@@ -64,33 +77,46 @@
 	
 		<h1> Super images turbo 3000  </h1>
 		
-		<form method="post" action="">
-			<fieldset>
-				<legend>Categories</legend>
-				
-				<?php foreach($keywords as $keyword): ?>
-				<?php $list = explode(";", $keyword["keywords"]); ?>
-				<label>
-					<?php echo $keyword['category'] ?>
-					<select name="filters[<?php echo $keyword['category'] ?>][]" >
-						<option value=""> --- </option>
-						<?php foreach($list as $option): ?>
-						<?php list($value, $label) = explode('*|*', $option); ?>
-						<option value="<?php echo $value ?>" ><?php echo $label ?></option>
-						<?php endforeach; ?>
-					</select>
-				</label>
-				<?php endforeach; ?>
-				
-			</fieldset>
-			<button> Filter </button>
-		</form>
+		<section class="filters" >
+		
+			<h2 class="toggler" >Categories</h2>
+		
+			<form method="post" action="" class="toggled" >
+				<fieldset>				
+					<?php foreach($keywords as $keyword): ?>
+					<?php $list = explode(";", $keyword["keywords"]); ?>
+					<label>
+						<?php echo $keyword['category'] ?>
+						<select name="filters[<?php echo $keyword['category'] ?>][]" >
+							<option value=""> --- </option>
+							<?php foreach($list as $option): ?>
+							<?php list($value, $label) = explode('*|*', $option); ?>
+							<option value="<?php echo $value ?>" <?php if(in_array($value, $filters)) echo 'selected="selected"' ?> ><?php echo $label ?></option>
+							<?php endforeach; ?>
+						</select>
+					</label>
+					<?php endforeach; ?>
+					
+				</fieldset>
+				<button> Filter </button>
+				<button class="reset"> Reset </button>
+			</form>
+		</section>
 		
 		<div class="gavin">
-						
+		
+			<ul class="breadcrumb" >
+				<?php foreach($names as $name): ?>
+				<li><?php echo $name ?></li>
+				<?php endforeach; ?>
+			</ul>
+			
 			<?php foreach($images as $image): ?><img src="admin/images/<?php echo $image['name'] ?>.jpg" /><?php endforeach; ?>
 			
 		</div>
+		
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<script src="js/index.js"></script>
 		    
     </body>
 </html>
